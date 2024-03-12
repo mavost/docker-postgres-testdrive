@@ -16,13 +16,11 @@ help: ## display this help
 	@printf "\n"
 
 
-stack = 
 ##@ Setup
-run-compose: ## set up stack, vars: stack=[NULL, extended]
-	docker-compose -f docker-compose$(stack).yaml build $(c)
-	docker-compose -f docker-compose$(stack).yaml up -d $(c)
+run-compose: ## set up stack
+	docker-compose -f docker-compose.yaml build $(c)
+	docker-compose -f docker-compose.yaml up -d $(c)
 
-stack = 
 ##@ Tear-down
-clean: ## clean up stack, vars: stack=[NULL, extended]
-	docker-compose -f docker-compose$(stack).yaml down $(c)
+clean: ## clean up stack
+	docker-compose -f docker-compose.yaml down $(c)
