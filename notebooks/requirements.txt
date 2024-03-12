@@ -1,0 +1,5 @@
+psycopg==3.1.18
+numpy==1.26.4
+pandas==2.2.1
+# uncommenting the following line will add a full jupyter installation!
+#jupyter==1.0.0

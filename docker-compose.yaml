@@ -1,0 +1,53 @@
+
+version: '3.8'
+services:
+  postgresdb:
+    build:
+      context: ./compose/postgres
+      args:
+       - BASEIMAGE=${POSTGRES_BASE_IMAGE}
+    image: ${POSTGRES_REFINED_IMAGE}:${STACK_VERSION}
+    container_name: ${STACK_NAME:-defstack}_postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    command: [ "postgres", "-c", "wal_level=logical" ]
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    networks:
+      - mydefaultstack
+    volumes:
+      - db:/var/lib/postgresql/data
+  pgadmin:
+    image: ${PGADMIN_BASE_IMAGE}
+    container_name: ${STACK_NAME:-defstack}_pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD:-admin}
+      - PGADMIN_CONFIG_SERVER_MODE=False
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.pgadmin.rule=Host(`pgadmin.${DOMAIN_NAME}`)"
+      - "traefik.http.services.pgadmin.loadbalancer.server.port=80"
+    ports:
+      - "${PGADMIN_PORT:-5050}:80"
+    networks:
+      - mydefaultstack
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    logging:
+      driver: none
+volumes:
+  db:
+    external: true
+    name: postgres-db
+  pgadmin:
+    driver: local
+    external: true
+    name: pgadmin-config
+networks:
+  mydefaultstack:
+    name: mydefaultstack
+    external: true 
