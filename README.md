@@ -167,6 +167,18 @@ world-db=# select * from city limit 10;
  10 | Tilburg        | NLD          | Noord-Brabant |     193238
 ```
 
+## Administration using pgAdmin
+
+[pgAdmin](https://www.pgadmin.org/faq/) is a management tool for PostgreSQL. It may be run either as a web or desktop application.
+
+1. Using the webbrowser, navigate to pgadmin.<`example.com`> and use the configured credentials to log in.
+2. Add a new server connection with the local stack mapping, i.e., host `postgresdb` and port `5432` - in case
+the postgres instance still is resifding int the same docker network.
+3. Optionally, set up [Traefik](https://github.com/traefik/traefik/) for either _label-based_ or _static_ routing following this
+[guide](https://community.traefik.io/t/access-postgresql-instance-with-subdomain-using-traefik/15367/2)
+and use `traefik` and port `5432`.
+4. Provide username, database and password according to configuration of the postgres instance.
+
 ## Connection using Python
 
 To maintain module interoperability it is advised to create different throwaway
