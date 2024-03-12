@@ -19,7 +19,7 @@ services:
     networks:
       - mydefaultstack
     volumes:
-      - db:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
   pgadmin:
     image: ${PGADMIN_BASE_IMAGE}
     container_name: ${STACK_NAME:-defstack}_pgadmin
@@ -29,6 +29,7 @@ services:
       - PGADMIN_CONFIG_SERVER_MODE=False
     labels:
       - "traefik.enable=true"
+      - "traefik.http.routers.pgadmin.tls=true"
       - "traefik.http.routers.pgadmin.rule=Host(`pgadmin.${DOMAIN_NAME}`)"
       - "traefik.http.services.pgadmin.loadbalancer.server.port=80"
     ports:
@@ -40,13 +41,14 @@ services:
     logging:
       driver: none
 volumes:
-  db:
-    external: true
-    name: postgres-db
+  postgres_data:
+    driver: local
+    #external: true
+    name: ${STACK_NAME:-defstack}_postgres-db
   pgadmin:
     driver: local
-    external: true
-    name: pgadmin-config
+    #external: true
+    name: ${STACK_NAME:-defstack}_pgadmin-config
 networks:
   mydefaultstack:
     name: mydefaultstack
