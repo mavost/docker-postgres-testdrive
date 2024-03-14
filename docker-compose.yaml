@@ -20,6 +20,7 @@ services:
       - mydefaultstack
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
   pgadmin:
     image: ${PGADMIN_BASE_IMAGE}
     container_name: ${STACK_NAME:-defstack}_pgadmin
