@@ -107,6 +107,11 @@ List of schemas
 (1 row)
 ```
 
+### Access to PostgreSQL DB from the command line from the docker host
+
+On Ubuntu linux install the client `sudo apt-get install -y postgresql-client` and run
+`psql "sslmode=disable dbname=worlddb user=world host=localhost port=8433"`.
+
 ### Manual manipulation of PostgreSQL DB in Docker container
 
 Note: ToDo , update
@@ -119,7 +124,7 @@ Two step process:
 1. Enter container: `docker exec -it <postgres-container-name> bash`
 2. Use client: `psql -d postgres -U postgres -W`
 
-Relevant commands:
+### Relevant `psql` commands
 
 - Switch to other db with new user: `\c <database_name> <user_name>`
 - Quit psql: `\q`
@@ -137,6 +142,7 @@ and verify: `SHOW wal_level;`
   - list views: `\dv`
   - list functions: `\df`
   - describe table: `\d <table_name>`
+- Execute script: `\i ./scripts/commands.sql`
 - History:
   - command history: `\s`
   - execute previous command: `\g`
