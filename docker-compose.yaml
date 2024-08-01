@@ -1,7 +1,7 @@
 
 version: '3.8'
 services:
-  postgresdb:
+  postgres:
     build:
       context: ./compose/postgres
       args:
