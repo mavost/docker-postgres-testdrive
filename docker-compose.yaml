@@ -15,8 +15,11 @@ services:
       - POSTGRES_DB=${POSTGRES_DB}
     labels:
       - "traefik.enable=true"
-      - "traefik.tcp.routers.postgres.tls=true"
-      - "traefik.tcp.routers.postgres.rule=HostSNI(`postgres.${DOMAIN_NAME}`)"
+      - "traefik.tcp.routers.postgres.tls=false"
+      - "traefik.tcp.routers.postgres.rule=HostSNI(`*`)"
+      # the following filter does not work here as HostSNI is a TLS concept
+      # - "traefik.tcp.routers.postgres.tls=true"
+      # - "traefik.tcp.routers.postgres.rule=HostSNI(`postgres.${DOMAIN_NAME}`)"
       - "traefik.tcp.routers.postgres.entrypoints=db"
       - "traefik.tcp.routers.postgres.service=postgres"
       - "traefik.tcp.services.postgres.loadbalancer.server.port=5432"
