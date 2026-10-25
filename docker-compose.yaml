@@ -53,8 +53,8 @@ services:
       driver: none
 volumes:
   postgres_data:
-    driver: local
-    #external: true
+    #driver: local
+    external: true
     name: ${STACK_NAME:-defstack}_postgres-db
   pgadmin:
     driver: local
