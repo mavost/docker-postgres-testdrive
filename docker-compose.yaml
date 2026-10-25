@@ -31,6 +31,8 @@ services:
 
   pgadmin:
     image: ${PGADMIN_BASE_IMAGE}
+    profiles:
+      - disabled  # Assigning any profile hides it from standard 'up' command    
     container_name: ${STACK_NAME:-defstack}_pgadmin
     environment:
       - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
